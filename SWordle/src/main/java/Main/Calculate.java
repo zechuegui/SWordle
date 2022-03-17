@@ -2,8 +2,8 @@ package Main;
 
 public class Calculate {
 
-	private GuessValue[] currentGuess; // Guess values associated with the current Guess
- 	private GuessValue[] used; // Used letters, to help with Missplaced chars
+	private final GuessValue[] currentGuess; // Guess values associated with the current Guess
+ 	private final GuessValue[] used; // Used letters, to help with Missplaced chars
 
 	public Calculate(){
 		currentGuess  = new GuessValue[5];
@@ -20,13 +20,13 @@ public class Calculate {
 
 		for(int x = 0; x<5; x++)  {
 			if(guess.charAt(x) == wordToGuess.charAt(x)) {
-				currentGuess[x] = GuessValue.Corret;
+				currentGuess[x] = GuessValue.Correct;
 			}
 		}
 
 		for(int x = 0; x<5; x++){ // Iterate the guess
 
-			if(currentGuess[x] == GuessValue.Corret){ // If the number is already Correct, continue
+			if(currentGuess[x] == GuessValue.Correct){ // If the number is already Correct, continue
 				continue;
 			}
 
@@ -39,8 +39,6 @@ public class Calculate {
 					used[y] = GuessValue.Missplaced;
 					break;
 				}
-
-
 			}
 		}
 

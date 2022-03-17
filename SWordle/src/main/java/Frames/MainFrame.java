@@ -1,25 +1,30 @@
-package Main;
+package Frames;
 
 import Exceptions.WrongInputException;
+import Main.Game;
+import Main.Guess;
+import Main.GuessValue;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame {
 
-	JButton word_submit_button;
-	JLabel[][] word_matrix;
-	Calculate calculate;
+	private JLabel[][] word_matrix;
+	private final Color colorGreen = new Color(136, 212, 83);
+	private final Color colorYellow = new Color(252,226,5);
+	private Game game;
 
-	public MainFrame() {
-		calculate = new Calculate();
+	public MainFrame(Game game) {
+		this.game = game;
 		setup();
 	}
 
 	public void setup() {
 
 		JFrame frame = new JFrame("SWordle");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       //Main Frame
+
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       //Main Frame
 		frame.setSize(700, 900);
 		frame.setLayout(null);
 		frame.setResizable(false);
@@ -47,13 +52,13 @@ public class MainFrame {
 		word_guess_box.setFont(new Font("Courier New", Font.BOLD, 30));
 		frame.add(word_guess_box);
 
-		word_submit_button = new JButton("ADIVINHAR");
+		JButton word_submit_button = new JButton("GUESS");
 		word_submit_button.setVisible(true);
 		word_submit_button.setBounds(290, 720, 120,50);
 		word_submit_button.setFont(new Font("Courier New", Font.BOLD, 15));
 		frame.add(word_submit_button);
 
-
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		word_submit_button.addActionListener(e -> {
@@ -65,12 +70,30 @@ public class MainFrame {
 
 				word_guess_box.setText(""); // Reset the box
 
+				game.nextRound(word);
+
 			}
 			catch (WrongInputException ex) {
 				System.out.println(ex);
 			}
 
 		});
+	}
+
+	public void updateBoard(int guessNumber, Guess guess){
+		for(int i = 0; i<guess.getWord().length(); i++) {
+
+			String wordGuessed = guess.getWord();
+			GuessValue[] guessValue = guess.getGuessValues();
+			JLabel currentLabel = word_matrix[i][guessNumber];
+
+			currentLabel.setText(String.valueOf(wordGuessed.charAt(i)));
+
+			switch (guessValue[i]) {
+				case Correct -> currentLabel.setForeground(colorGreen);
+				case Missplaced -> currentLabel.setForeground(colorYellow);
+			}
+		}
 	}
 
 	public void checkWord(String word) throws WrongInputException {
@@ -86,7 +109,6 @@ public class MainFrame {
  *
  *  TODO
  *
- * Look for colors (Bumblebee yellow) Green 88D453
  *
  * Ser possível jogar contra o pc
  *

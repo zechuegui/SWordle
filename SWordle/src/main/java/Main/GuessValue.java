@@ -1,7 +1,7 @@
 package Main;
 
 public enum GuessValue {
-	Corret,
+	Correct,
 	Missplaced,
 	Incorrect,
 }
