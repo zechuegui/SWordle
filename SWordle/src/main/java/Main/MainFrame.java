@@ -9,9 +9,10 @@ public class MainFrame {
 
 	JButton word_submit_button;
 	JLabel[][] word_matrix;
-
+	Calculate calculate;
 
 	public MainFrame() {
+		calculate = new Calculate();
 		setup();
 	}
 
@@ -34,6 +35,7 @@ public class MainFrame {
 				wordLabel.setVisible(true);
 				wordLabel.setBounds(x*100 + 140,y*100+ 10,100,100);
 				frame.add(wordLabel);
+
 				word_matrix[x][y] = wordLabel;
 
 			}
@@ -62,6 +64,7 @@ public class MainFrame {
 				checkWord(word); // Check if the given word is valid
 
 				word_guess_box.setText(""); // Reset the box
+
 			}
 			catch (WrongInputException ex) {
 				System.out.println(ex);
