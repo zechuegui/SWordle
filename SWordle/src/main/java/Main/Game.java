@@ -5,14 +5,14 @@ import Frames.MainFrame;
 
 public class Game {
 
-	private final InitialFrame initialFrame;
+
 	private final Calculate calculate;
 	private String wordToGuess;
 	private int round = 0;
 	MainFrame mainFrame;
 
 	public Game(){
-		initialFrame = new InitialFrame(this);
+		new InitialFrame(this);
 		calculate = new Calculate();
 	}
 
@@ -31,7 +31,23 @@ public class Game {
 
 		mainFrame.updateBoard(round, guess);
 		round++;
+
+		checkStatus(guessValues);
 	}
 
+	public void checkStatus(GuessValue[] guessValues) {
+		if(round == 6){
+			mainFrame.gameOver(wordToGuess);
+		}
+
+		for(GuessValue value : guessValues){
+
+			if(value != GuessValue.Correct) {
+				break;
+			}
+		}
+
+		mainFrame.gameWon();
+	}
 
 }

@@ -1,3 +1,3 @@
 # SWordle
 
-Just a Wordle clone made in Java
+Wordle made in Java
