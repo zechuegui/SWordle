@@ -15,7 +15,8 @@ public class MainFrame {
 	private final Color colorYellow = new Color(252,226,5);
 	private final String fontName = "Courier New";
 	private Game game;
-
+	private JFrame frame;
+	private JTextField word_guess_box;
 
 	public MainFrame(Game game) {
 		this.game = game;
@@ -24,7 +25,7 @@ public class MainFrame {
 
 	public void setup() {
 
-		JFrame frame = new JFrame("SWordle");
+		frame = new JFrame("SWordle");
 
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       //Main Frame
 		frame.setSize(700, 900);
@@ -48,7 +49,7 @@ public class MainFrame {
 			}
 		}
 
-		JTextField word_guess_box = new JTextField();
+		word_guess_box = new JTextField();
 		word_guess_box.setVisible(true);
 		word_guess_box.setBounds(250,650,200,55);
 		word_guess_box.setFont(new Font(fontName, Font.BOLD, 30));
@@ -63,30 +64,17 @@ public class MainFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-		word_submit_button.addActionListener(e -> {
-			try {
-
-				String word = word_guess_box.getText(); // Get the word input
-
-				checkWord(word); // Check if the given word is valid
-
-				word_guess_box.setText(""); // Reset the box
-
-				game.nextRound(word);
-
-			}
-			catch (WrongInputException ex) {
-				System.out.println(ex);
-			}
-
-		});
+		word_guess_box.addActionListener(e -> buttonOrEnterPressed());
+		word_submit_button.addActionListener(e -> buttonOrEnterPressed());
 	}
 
 	public void updateBoard(int guessNumber, Guess guess){
+
+		String wordGuessed = guess.getWord();
+		GuessValue[] guessValue = guess.getGuessValues();
+
 		for(int i = 0; i<guess.getWord().length(); i++) {
 
-			String wordGuessed = guess.getWord();
-			GuessValue[] guessValue = guess.getGuessValues();
 			JLabel currentLabel = word_matrix[i][guessNumber];
 
 			currentLabel.setText(String.valueOf(wordGuessed.charAt(i)));
@@ -98,49 +86,47 @@ public class MainFrame {
 		}
 	}
 
-	public void gameOver(String wordToGuess){
-		JFrame gameOverPanel = new JFrame("Game Over");
-		gameOverPanel.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       //Main Frame setup
-		gameOverPanel.setSize(200, 250);
-		gameOverPanel.setLayout(null);
-		gameOverPanel.setResizable(false);
-
-		JLabel informationLabel = new JLabel("<html><div style=\"text-align: center;\">You loose, <br> the word was: "+ "\n" + wordToGuess + "<br><br> Try again?</div></html>");
-		informationLabel.setFont(new Font(fontName, Font.BOLD, 20));
-		informationLabel.setBounds(20,0,200,150);
-		informationLabel.setVisible(true);
-
-		JButton tryAgainButton = new JButton("Try Again");
-		tryAgainButton.setFont(new Font(fontName, Font.BOLD, 15));
-		tryAgainButton.setBounds(70,180,100,20);
-		tryAgainButton.setVisible(true);
-
-		gameOverPanel.add(informationLabel);
-		gameOverPanel.add(tryAgainButton);
-
-
-		gameOverPanel.setLocationRelativeTo(null);
-		gameOverPanel.setVisible(true);
-	}
-
-	public void gameWon(){
-
-	}
-
-	public void checkWord(String word) throws WrongInputException {
+	private void checkWord(String word) throws WrongInputException {
 
 		if(word.length()!=5){
 			throw new WrongInputException("Input must have 5 letters");
 		}
 	}
 
+	public void hide(){
+		if(frame != null){
+			frame.dispose();
+		}
+
+	}
+
+	private void buttonOrEnterPressed(){
+		try {
+
+			String word = word_guess_box.getText().toUpperCase(); // Get the word input
+
+			checkWord(word); // Check if the given word is valid
+
+			word_guess_box.setText(""); // Reset the box
+
+			game.nextRound(word);
+
+		}
+		catch (WrongInputException ex) {
+			System.out.println(ex);
+		}
+	}
 }
 
 /**
  *
  *  TODO
  *
+ *  !! Permitir apenas letras, não simbolos
+ *
  *
  * Ser possível jogar contra o pc
+ *
+ * Guardar vitórias j1 vs j2 (colocando a possibilidade de no início escolhar quem joga 1º e à melhor de quanto)
  *
  */

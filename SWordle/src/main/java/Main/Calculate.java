@@ -33,7 +33,7 @@ public class Calculate {
 			for(int y= 0; y<5; y++){ // Iterate the wordToGuess
 
 				if(x!=y && guess.charAt(x)==wordToGuess.charAt(y) && currentGuess[x] == GuessValue.Incorrect &&
-						currentGuess[y] == GuessValue.Incorrect && used[y]!=GuessValue.Missplaced){
+						currentGuess[y]!=GuessValue.Correct && used[y]!=GuessValue.Missplaced){
 
 					currentGuess[x] = GuessValue.Missplaced;
 					used[y] = GuessValue.Missplaced;

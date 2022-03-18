@@ -1,5 +1,6 @@
 package Main;
 
+import Frames.EndOfGameFrame;
 import Frames.InitialFrame;
 import Frames.MainFrame;
 
@@ -9,14 +10,29 @@ public class Game {
 	private final Calculate calculate;
 	private String wordToGuess;
 	private int round = 0;
-	MainFrame mainFrame;
+	private MainFrame mainFrame;
+	private InitialFrame initialFrame;
+	private EndOfGameFrame endOfGameFrame;
 
 	public Game(){
-		new InitialFrame(this);
 		calculate = new Calculate();
 	}
 
-	public void start(String wordToGuess){
+	public void newGame() {
+
+		if(mainFrame != null){
+
+			mainFrame.hide();
+		}
+		if(endOfGameFrame != null) {
+			endOfGameFrame.hide();
+		}
+
+		round = 0;
+		initialFrame = new InitialFrame(this);
+	}
+
+	public void startGame(String wordToGuess){
 
 		this.wordToGuess = wordToGuess;
 
@@ -37,17 +53,19 @@ public class Game {
 
 	public void checkStatus(GuessValue[] guessValues) {
 		if(round == 6){
-			mainFrame.gameOver(wordToGuess);
+			endOfGameFrame = new EndOfGameFrame(this);
+			endOfGameFrame.gameOver(wordToGuess);
 		}
 
 		for(GuessValue value : guessValues){
 
 			if(value != GuessValue.Correct) {
-				break;
+				return;
 			}
 		}
 
-		mainFrame.gameWon();
+		endOfGameFrame = new EndOfGameFrame(this);
+		endOfGameFrame.gameWon();
 	}
 
 }

@@ -2,7 +2,6 @@ package Frames;
 
 import Exceptions.WrongInputException;
 import Main.Game;
-import jdk.jshell.spi.ExecutionControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +11,8 @@ public class InitialFrame {
 
 	private final Font textFont = new Font("Courier New", Font.BOLD, 15);
 	private final Game game;
+	private JFrame initialFrame;
+	private JTextField wordBox;
 
 	public InitialFrame(Game game){
 		this.game = game;
@@ -20,7 +21,7 @@ public class InitialFrame {
 
 	public void setup(){
 
-		JFrame initialFrame = new JFrame();
+		initialFrame = new JFrame();
 		initialFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       //Main Frame setup
 		initialFrame.setSize(200, 150);
 		initialFrame.setLayout(null);
@@ -62,7 +63,7 @@ public class InitialFrame {
 				computerOption.setVisible(false);
 				startButton.setVisible(false);
 
-				JTextField wordBox = new JTextField();
+				wordBox = new JTextField();
 				wordBox.setVisible(true);
 				wordBox.setBounds(10,10,180,55);
 				wordBox.setFont(new Font("Courier New", Font.BOLD, 30));
@@ -74,22 +75,8 @@ public class InitialFrame {
 				initialFrame.add(wordBox);
 				initialFrame.add(startGameButton);
 
-				startGameButton.addActionListener(w -> {
-					try {
-
-						String wordToGuess = wordBox.getText();
-						checkWord(wordToGuess);
-
-						game.start(wordToGuess);
-
-						initialFrame.setVisible(false);
-						initialFrame.dispose();
-
-					}
-					catch (WrongInputException ex){
-						System.out.println(ex);
-					}
-				});
+				startGameButton.addActionListener(w -> buttonOrEnterPressed());
+				wordBox.addActionListener(w -> buttonOrEnterPressed());
 
 			}
 			else{ // Choose the word
@@ -101,11 +88,28 @@ public class InitialFrame {
 
 	}
 
-	public void checkWord(String word) throws WrongInputException {
+	private void checkWord(String word) throws WrongInputException {
 
 		if(word.length()!=5){
 			throw new WrongInputException("Input must have 5 letters");
 		}
 	}
 
+	private void buttonOrEnterPressed(){
+
+		try {
+
+			String wordToGuess = wordBox.getText().toUpperCase();
+			checkWord(wordToGuess);
+
+			game.startGame(wordToGuess);
+
+			initialFrame.setVisible(false);
+			initialFrame.dispose();
+
+		}
+		catch (WrongInputException ex){
+			System.out.println(ex);
+		}
+	}
 }
