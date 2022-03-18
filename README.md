@@ -1,5 +1,7 @@
 # SWordle
 
+[![Maven Package](https://github.com/zechuegui/SWordle/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/zechuegui/SWordle/actions/workflows/maven-publish.yml)
+
 Wordle made in Java
 
 Game should be fully functional, there may be some bugs.
