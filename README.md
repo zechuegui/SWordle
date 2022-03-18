@@ -1,6 +1,6 @@
 # SWordle
 
-[![Maven Package](https://github.com/zechuegui/SWordle/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/zechuegui/SWordle/actions/workflows/maven-publish.yml)
+[![Java CI with Maven](https://github.com/zechuegui/SWordle/actions/workflows/maven.yml/badge.svg)](https://github.com/zechuegui/SWordle/actions/workflows/maven.yml)
 
 Wordle made in Java
 
