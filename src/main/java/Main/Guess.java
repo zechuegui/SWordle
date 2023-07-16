@@ -5,8 +5,8 @@ public class Guess {
 	private GuessValue[] guessValues;
 	private String word;
 
-	public Guess(GuessValue[] guessValue, String word){
-		this.guessValues =  guessValue;
+	public Guess(GuessValue[] guessValue, String word) {
+		this.guessValues = guessValue;
 		this.word = word;
 	}
 

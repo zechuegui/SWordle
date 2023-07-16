@@ -14,12 +14,12 @@ public class InitialFrame {
 	private JFrame initialFrame;
 	private JTextField wordBox;
 
-	public InitialFrame(Game game){
+	public InitialFrame(Game game) {
 		this.game = game;
 		setup();
 	}
 
-	public void setup(){
+	public void setup() {
 
 		initialFrame = new JFrame();
 		initialFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       //Main Frame setup
@@ -28,13 +28,13 @@ public class InitialFrame {
 		initialFrame.setResizable(false);
 
 
-		JRadioButton playerOption = new JRadioButton("2 Players",true); // Creating the Radio Buttons
+		JRadioButton playerOption = new JRadioButton("2 Players", true); // Creating the Radio Buttons
 		playerOption.setFont(textFont);
-		playerOption.setBounds(40,0, 200,50);
+		playerOption.setBounds(40, 0, 200, 50);
 
 		JRadioButton computerOption = new JRadioButton("Computer");
 		computerOption.setFont(textFont);
-		computerOption.setBounds(40,35, 200,  50);
+		computerOption.setBounds(40, 35, 200, 50);
 
 		ButtonGroup buttonGroup = new ButtonGroup();    // Creating the button Group
 		buttonGroup.add(playerOption);
@@ -42,7 +42,7 @@ public class InitialFrame {
 
 
 		JButton startButton = new JButton("START"); // Creting the start button
-		startButton.setBounds(60,80,80,40);
+		startButton.setBounds(60, 80, 80, 40);
 		startButton.setFont(textFont);
 
 
@@ -57,7 +57,7 @@ public class InitialFrame {
 
 			boolean is2PGame = playerOption.isSelected();
 
-			if(is2PGame){ // Ask the player for a word, that the 2nd player has to guess
+			if (is2PGame) { // Ask the player for a word, that the 2nd player has to guess
 
 				playerOption.setVisible(false);
 				computerOption.setVisible(false);
@@ -65,11 +65,11 @@ public class InitialFrame {
 
 				wordBox = new JTextField();
 				wordBox.setVisible(true);
-				wordBox.setBounds(10,10,180,55);
+				wordBox.setBounds(10, 10, 180, 55);
 				wordBox.setFont(new Font("Courier New", Font.BOLD, 30));
 
 				JButton startGameButton = new JButton("START"); // Creting the start button
-				startGameButton.setBounds(60,80,80,40);
+				startGameButton.setBounds(60, 80, 80, 40);
 				startGameButton.setFont(textFont);
 
 				initialFrame.add(wordBox);
@@ -78,8 +78,7 @@ public class InitialFrame {
 				startGameButton.addActionListener(w -> buttonOrEnterPressed());
 				wordBox.addActionListener(w -> buttonOrEnterPressed());
 
-			}
-			else{ // Choose the word
+			} else { // Choose the word
 				// TODO
 			}
 
@@ -90,12 +89,12 @@ public class InitialFrame {
 
 	private void checkWord(String word) throws WrongInputException {
 
-		if(word.length()!=5){
+		if (word.length() != 5) {
 			throw new WrongInputException("Input must have 5 letters");
 		}
 	}
 
-	private void buttonOrEnterPressed(){
+	private void buttonOrEnterPressed() {
 
 		try {
 
@@ -107,8 +106,7 @@ public class InitialFrame {
 			initialFrame.setVisible(false);
 			initialFrame.dispose();
 
-		}
-		catch (WrongInputException ex){
+		} catch (WrongInputException ex) {
 			System.out.println(ex);
 		}
 	}

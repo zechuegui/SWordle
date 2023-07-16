@@ -14,17 +14,18 @@ public class Game {
 	private InitialFrame initialFrame;
 	private EndOfGameFrame endOfGameFrame;
 
-	public Game(){
+
+	public Game() {
 		calculate = new Calculate();
 	}
 
 	public void newGame() {
 
-		if(mainFrame != null){
+		if (mainFrame != null) {
 
 			mainFrame.hide();
 		}
-		if(endOfGameFrame != null) {
+		if (endOfGameFrame != null) {
 			endOfGameFrame.hide();
 		}
 
@@ -32,14 +33,14 @@ public class Game {
 		initialFrame = new InitialFrame(this);
 	}
 
-	public void startGame(String wordToGuess){
+	public void startGame(String wordToGuess) {
 
 		this.wordToGuess = wordToGuess;
 
 		mainFrame = new MainFrame(this);
 	}
 
-	public void nextRound(String guessedWord){
+	public void nextRound(String guessedWord) {
 
 		GuessValue[] guessValues = calculate.calculate(wordToGuess, guessedWord);
 
@@ -52,18 +53,18 @@ public class Game {
 	}
 
 	public void checkStatus(GuessValue[] guessValues) {
-		if(round == 6){
+
+		if (round == 6) {
 			endOfGameFrame = new EndOfGameFrame(this);
 			endOfGameFrame.gameOver(wordToGuess);
 		}
 
-		for(GuessValue value : guessValues){
+		for (GuessValue value : guessValues) {
 
-			if(value != GuessValue.Correct) {
+			if (value != GuessValue.Correct) {
 				return;
 			}
 		}
-
 		endOfGameFrame = new EndOfGameFrame(this);
 		endOfGameFrame.gameWon();
 	}

@@ -3,37 +3,38 @@ package Main;
 public class Calculate {
 
 	private final GuessValue[] currentGuess; // Guess values associated with the current Guess
- 	private final GuessValue[] used; // Used letters, to help with Missplaced chars
+	private final GuessValue[] used; // Used letters, to help with Missplaced chars
 
-	public Calculate(){
-		currentGuess  = new GuessValue[5];
+	public Calculate() {
+		currentGuess = new GuessValue[5];
 		used = new GuessValue[5];
 
 		reset(currentGuess);
 		reset(used);
 	}
 
-	public GuessValue[] calculate(String wordToGuess, String guess){
+	public GuessValue[] calculate(String wordToGuess, String guess) {
 
 		reset(currentGuess);
 		reset(used);
 
-		for(int x = 0; x<5; x++)  {
-			if(guess.charAt(x) == wordToGuess.charAt(x)) {
+		for (int x = 0; x < 5; x++) {
+			if (guess.charAt(x) == wordToGuess.charAt(x)) {
 				currentGuess[x] = GuessValue.Correct;
 			}
 		}
 
-		for(int x = 0; x<5; x++){ // Iterate the guess
+		for (int x = 0; x < 5; x++) { // Iterate the guess
 
-			if(currentGuess[x] == GuessValue.Correct){ // If the number is already Correct, continue
+			if (currentGuess[x] == GuessValue.Correct) { // If the number is already Correct, continue
 				continue;
 			}
 
-			for(int y= 0; y<5; y++){ // Iterate the wordToGuess
+			for (int y = 0; y < 5; y++) { // Iterate the wordToGuess
 
-				if(x!=y && guess.charAt(x)==wordToGuess.charAt(y) && currentGuess[x] == GuessValue.Incorrect &&
-						currentGuess[y]!=GuessValue.Correct && used[y]!=GuessValue.Missplaced){
+				if (x != y && guess.charAt(x) == wordToGuess.charAt(y) && currentGuess[x] == GuessValue.Incorrect &&
+				    currentGuess[y] != GuessValue.Correct && used[y] != GuessValue.Missplaced) {
+
 
 					currentGuess[x] = GuessValue.Missplaced;
 					used[y] = GuessValue.Missplaced;
@@ -45,7 +46,7 @@ public class Calculate {
 		return currentGuess;
 	}
 
-	public static void reset(GuessValue[] guessArray){
+	public static void reset(GuessValue[] guessArray) {
 
 		for (int i = 0; i < 5; i++) { // Reset the guessArray to Incorrect
 			guessArray[i] = GuessValue.Incorrect;
